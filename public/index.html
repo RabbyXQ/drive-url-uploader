@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Tester</title>
+</head>
+<body>
+    <h1>Upload File to Google Drive</h1>
+    <form id="uploadForm">
+        <label for="fileUrl">File URL:</label>
+        <input type="text" id="fileUrl" name="fileUrl" required>
+        <button type="submit">Upload File</button>
+    </form>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            
+            const fileUrl = document.getElementById('fileUrl').value;
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ fileUrl }),
+                });
+
+                const result = await response.text();
+                alert(result);
+            } catch (error) {
+                console.error('Error uploading file', error);
+                alert('Error uploading file');
+            }
+        });
+    </script>
+</body>
+</html>
